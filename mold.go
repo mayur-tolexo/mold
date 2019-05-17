@@ -3,7 +3,6 @@ package mold
 import (
 	"bytes"
 	"html/template"
-	"strings"
 
 	wkhtmltopdf "github.com/SebastiaanKlippert/go-wkhtmltopdf"
 )
@@ -58,7 +57,7 @@ func (m *Mold) Bytes() []byte {
 func (m *Mold) PDF(path, name string) (err error) {
 	m.Dpi.Set(600)
 	m.Grayscale.Set(true)
-	m.AddPage(wkhtmltopdf.NewPageReader(strings.NewReader(m.String())))
+	m.AddPage(wkhtmltopdf.NewPageReader(bytes.NewReader(m.Bytes())))
 	if err = m.Create(); err == nil {
 		err = m.WriteFile(path + "/" + name)
 	}
