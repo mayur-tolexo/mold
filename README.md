@@ -28,8 +28,8 @@ type TodoPageData struct {
 }
 
 func main() {
-	mold, _ := mold.NewHTMLTemplate()
-	mold.HTMLTemplate = `
+
+	tmpl := `
 	<h1>{{.PageTitle}}<h1>
 	<ul>
 	    {{range .Todos}}
@@ -41,6 +41,8 @@ func main() {
 	    {{end}}
 	</ul>
 	`
+	
+	mold, _ := mold.NewHTMLTemplate(tmpl)
 
 	data := TodoPageData{
 		PageTitle: "My TODO list",
