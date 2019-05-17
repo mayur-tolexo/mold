@@ -33,43 +33,12 @@ func main() {
 				{Title: "Task 3", Done: true},
 			},
 		}
-
-		// var tpl bytes.Buffer
-		// tmpl.Execute(w, data)
 		if err := mold.Execute(data); err == nil {
 			w.Write(mold.Bytes())
 			mold.PDF(".", "test.pdf")
 		} else {
 			fmt.Println(err)
 		}
-
-		// pdfg, err := wkhtmltopdf.NewPDFGenerator()
-		// if err != nil {
-		// 	log.Fatal(err)
-		// }
-
-		// // page := wkhtmltopdf.NewPage(tpl.String())
-		// // page.FooterRight.Set("[page]")
-		// // page.FooterFontSize.Set(10)
-		// // page.Zoom.Set(0.95)
-
-		// pdfg.AddPage(wkhtmltopdf.NewPageReader(bytes.NewReader(tpl.Bytes())))
-
-		// // Create PDF document in internal buffer
-		// err = pdfg.Create()
-		// if err != nil {
-		// 	log.Fatal(err)
-		// }
-
-		// // Write buffer contents to file on disk
-		// err = pdfg.WriteFile("./simplesample.pdf")
-		// if err != nil {
-		// 	log.Fatal(err)
-		// }
-
-		// fmt.Println("Done")
-		// Output: Done
-
 	})
 
 	http.ListenAndServe(":80", nil)
