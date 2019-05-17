@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"net/http"
 
 	"github.com/mayur-tolexo/mold"
 )
@@ -34,25 +33,19 @@ func main() {
 	</ul>
 	`
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	data := TodoPageData{
+		PageTitle: "My TODO list",
+		Todos: []Todo{
+			{Title: "Task 1", Done: false},
+			{Title: "Task 2", Done: true},
+			{Title: "Task 3", Done: true},
+			{Title: "Task 4", Done: true},
+		},
+	}
 
-		data := TodoPageData{
-			PageTitle: "My TODO list",
-			Todos: []Todo{
-				{Title: "Task 1", Done: false},
-				{Title: "Task 2", Done: true},
-				{Title: "Task 3", Done: true},
-				{Title: "Task 4", Done: true},
-			},
-		}
-
-		if err := mold.Execute(data); err == nil {
-			w.Write(mold.Bytes())
-			mold.PDF(".", "test.pdf")
-		} else {
-			fmt.Println(err)
-		}
-	})
-
-	http.ListenAndServe(":80", nil)
+	if err := mold.Execute(data); err == nil {
+		mold.PDF(".", "tmp.pdf")
+	} else {
+		fmt.Println(err)
+	}
 }
