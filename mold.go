@@ -1,69 +1,55 @@
-package main
+package mold
 
 import (
 	"bytes"
-	"fmt"
 	"html/template"
-	"log"
-	"net/http"
 
 	wkhtmltopdf "github.com/SebastiaanKlippert/go-wkhtmltopdf"
 )
 
-type Todo struct {
-	Title string
-	Done  bool
+//Mold model
+type Mold struct {
+	HTMLTemplate string //html template string
+	HTMLPath     string //html template file path
+	buff         bytes.Buffer
+	*wkhtmltopdf.PDFGenerator
 }
 
-type TodoPageData struct {
-	PageTitle string
-	Todos     []Todo
+//NewHTMLTemplate will create new return new html template mold
+func NewHTMLTemplate(tmpl ...string) (m *Mold, err error) {
+	val := ""
+	if len(tmpl) > 0 {
+		val = tmpl[0]
+	}
+	m = &Mold{
+		HTMLTemplate: val,
+	}
+	m.PDFGenerator, err = wkhtmltopdf.NewPDFGenerator()
+	return
 }
 
-func main() {
-	tmpl := template.Must(template.ParseFiles("layout.html"))
+//Execute will execute the template
+func (m *Mold) Execute(data interface{}) (err error) {
+	tmpl := template.Must(template.ParseFiles(m.HTMLPath))
+	err = tmpl.Execute(&m.buff, data)
+	return
+}
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		data := TodoPageData{
-			PageTitle: "My TODO list",
-			Todos: []Todo{
-				{Title: "Task 1", Done: false},
-				{Title: "Task 2", Done: true},
-				{Title: "Task 3", Done: true},
-			},
-		}
-		var tpl bytes.Buffer
-		// tmpl.Execute(w, data)
-		tmpl.Execute(&tpl, data)
-		w.Write(tpl.Bytes())
-		pdfg, err := wkhtmltopdf.NewPDFGenerator()
-		if err != nil {
-			log.Fatal(err)
-		}
+//String will return string from mold buffer
+func (m *Mold) String() string {
+	return m.buff.String()
+}
 
-		// page := wkhtmltopdf.NewPage(tpl.String())
-		// page.FooterRight.Set("[page]")
-		// page.FooterFontSize.Set(10)
-		// page.Zoom.Set(0.95)
+//Bytes will return bytes from mold buffer
+func (m *Mold) Bytes() []byte {
+	return m.buff.Bytes()
+}
 
-		pdfg.AddPage(wkhtmltopdf.NewPageReader(bytes.NewReader(tpl.Bytes())))
-
-		// Create PDF document in internal buffer
-		err = pdfg.Create()
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		// Write buffer contents to file on disk
-		err = pdfg.WriteFile("./simplesample.pdf")
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		fmt.Println("Done")
-		// Output: Done
-
-	})
-
-	http.ListenAndServe(":80", nil)
+//PDF will create pdf
+func (m *Mold) PDF(path, name string) (err error) {
+	m.AddPage(wkhtmltopdf.NewPageReader(bytes.NewReader(m.buff.Bytes())))
+	if err = m.Create(); err == nil {
+		err = m.WriteFile(path + "/" + name)
+	}
+	return
 }
