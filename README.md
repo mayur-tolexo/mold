@@ -61,3 +61,7 @@ func main() {
 	}
 }
 ```
+
+#### Example1 Output
+![Screenshot 2019-05-17 at 4 02 15 PM](https://user-images.githubusercontent.com/20511920/57922383-41d2d900-78bd-11e9-8ee3-b3de9b51c8db.png)
+
