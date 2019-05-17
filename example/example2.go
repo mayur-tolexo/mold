@@ -19,14 +19,6 @@ type TodoPageData struct {
 	Todos     []Todo
 }
 
-//Customer : Registration Mail
-type Customer struct {
-	TotalOverDueInvoiceCount  int
-	TotalOverDueInvoiceAmount string
-	TotalDueInInvoiceCount    int
-	TotalDueInInvoiceAmount   string
-}
-
 func main() {
 	mold, _ := mold.NewHTMLTemplate()
 	mold.HTMLTemplate = `
