@@ -19,9 +19,28 @@ type TodoPageData struct {
 	Todos     []Todo
 }
 
+//Customer : Registration Mail
+type Customer struct {
+	TotalOverDueInvoiceCount  int
+	TotalOverDueInvoiceAmount string
+	TotalDueInInvoiceCount    int
+	TotalDueInInvoiceAmount   string
+}
+
 func main() {
 	mold, _ := mold.NewHTMLTemplate()
-	mold.HTMLPath = "layout.html"
+	mold.HTMLTemplate = `
+	<h1>{{.PageTitle}}<h1>
+	<ul>
+	    {{range .Todos}}
+	        {{if .Done}}
+	            <li class="done">{{.Title}}</li>
+	        {{else}}
+	            <li>{{.Title}}</li>
+	        {{end}}
+	    {{end}}
+	</ul>
+	`
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 
@@ -34,6 +53,7 @@ func main() {
 				{Title: "Task 4", Done: true},
 			},
 		}
+
 		if err := mold.Execute(data); err == nil {
 			w.Write(mold.Bytes())
 			mold.PDF(".", "test.pdf")
