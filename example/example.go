@@ -31,6 +31,7 @@ func main() {
 				{Title: "Task 1", Done: false},
 				{Title: "Task 2", Done: true},
 				{Title: "Task 3", Done: true},
+				{Title: "Task 4", Done: true},
 			},
 		}
 		if err := mold.Execute(data); err == nil {
