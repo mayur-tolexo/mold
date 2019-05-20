@@ -62,6 +62,62 @@ func main() {
 }
 ```
 
-#### Example1 Output
-![Screenshot 2019-05-17 at 4 02 15 PM](https://user-images.githubusercontent.com/20511920/57922383-41d2d900-78bd-11e9-8ee3-b3de9b51c8db.png)
+### Example 2
+```
+
+//Invoice details
+type Invoice struct {
+	InvoiceNo   string
+	InvoiceDate string
+	Currency    string
+	AmountDue   float64
+	Items       []ItemDetail
+	Total       float64
+}
+
+//ItemDetail : Item details
+type ItemDetail struct {
+	Name     string
+	Desc     string
+	Amount   float64
+	Qty      int
+	Currency string
+	Total    float64
+}
+
+func main() {
+	mold, _ := mold.NewHTMLTemplate()
+	mold.HTMLPath = "invoice.html"
+
+	item := []ItemDetail{
+		{
+			Name:     "Front End Consultation",
+			Desc:     "Experience Review",
+			Currency: "Rs.",
+			Amount:   150,
+			Qty:      4,
+			Total:    600,
+		},
+	}
+
+	data := Invoice{
+		InvoiceNo:   "Invoice",
+		InvoiceDate: "January 1, 2019",
+		Currency:    "Rs.",
+		AmountDue:   600,
+		Items:       item,
+		Total:       600,
+	}
+
+	if err := mold.Execute(data); err == nil {
+		mold.PDF(".", "invoice.pdf")
+	} else {
+		fmt.Println(err)
+	}
+}
+```
+
+#### Example2 Output
+![Screenshot 2019-05-20 at 4 44 19 PM](https://user-images.githubusercontent.com/20511920/58017758-a476df80-7b1e-11e9-911b-dcd44c0bfe9a.png)
+
 
