@@ -13,7 +13,7 @@ go get github.com/mayur-tolexo/mold
 ```
 
 
-### Example
+### Example 1
 ```
 //Todo model
 type Todo struct {
@@ -117,7 +117,7 @@ func main() {
 }
 ```
 
-#### Example2 Output
+#### Output
 ![Screenshot 2019-05-20 at 4 44 19 PM](https://user-images.githubusercontent.com/20511920/58017758-a476df80-7b1e-11e9-911b-dcd44c0bfe9a.png)
 
 
