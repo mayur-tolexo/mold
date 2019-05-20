@@ -193,9 +193,9 @@ aside h1 { border-color: #999; border-bottom-style: solid; }
 					<tr>
 						<td><a class="cut">-</a><span contenteditable>{{.Name}}</span></td>
 						<td><span contenteditable>{{.Desc}}</span></td>
-						<td><span data-prefix>{{.Currency}}</span><span contenteditable>{{.Amount}}</span></td>
+						<td><span data-prefix>{{html $.Currency}}</span><span contenteditable>{{.Amount}}</span></td>
 						<td><span contenteditable>{{.Qty}}</span></td>
-						<td><span data-prefix>{{.Currency}}</span><span>{{.Total}}</span></td>
+						<td><span data-prefix>{{html $.Currency}}</span><span>{{.Total}}</span></td>
 					</tr>
 					{{end}}
 				</tbody>

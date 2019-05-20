@@ -18,12 +18,11 @@ type Invoice struct {
 
 //ItemDetail : Item details
 type ItemDetail struct {
-	Name     string
-	Desc     string
-	Amount   float64
-	Qty      int
-	Currency string
-	Total    float64
+	Name   string
+	Desc   string
+	Amount float64
+	Qty    int
+	Total  float64
 }
 
 func main() {
@@ -32,12 +31,11 @@ func main() {
 
 	item := []ItemDetail{
 		{
-			Name:     "Front End Consultation",
-			Desc:     "Experience Review",
-			Currency: "Rs.",
-			Amount:   150,
-			Qty:      4,
-			Total:    600,
+			Name:   "Front End Consultation",
+			Desc:   "Experience Review",
+			Amount: 150,
+			Qty:    4,
+			Total:  600,
 		},
 	}
 
