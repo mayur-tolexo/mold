@@ -81,7 +81,6 @@ type ItemDetail struct {
 	Desc     string
 	Amount   float64
 	Qty      int
-	Currency string
 	Total    float64
 }
 
@@ -93,7 +92,6 @@ func main() {
 		{
 			Name:     "Front End Consultation",
 			Desc:     "Experience Review",
-			Currency: "Rs.",
 			Amount:   150,
 			Qty:      4,
 			Total:    600,
